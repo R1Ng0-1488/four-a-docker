@@ -19,13 +19,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('api/admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('auth/', include('rest_framework_social_oauth2.urls')),
     # path('auth/', include('djoser.urls')),
     # path('auth/', include('djoser.urls.authtoken')),
     # path('auth/', include('djoser.urls.jwt')),
-    path('api228/', include('main.urls')),
+    path('api/api228/', include('main.urls')),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,30 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block title %}Музыка{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		{% for album in albums %}
+		<div class="col div m-3">
+			<h1 class="text-white border-danger">{{ album.title }}</h1>
+			<p class="text-white">{{ album.text }}</p>
+			{% if album.image %}
+			<img class="rounded" width="300" height="300" src="{{ album.image }}">
+			{% else %}
+			<img class="rounded" width="300" height="300" src="{% static 'main/empty.png' %}">
+			{% endif %}
+			<p class="text-white font-italic">{{ album.published }}</p>
+			<div class="row">
+				{% for music in album.musics_set.all %}
+				<div class="col">
+					<a href="{{ music.music }}"><img class="hovers m-2" width="50" height="50" src="{% static 'main/vk-black.png' %}"></a>
+				</div>	
+				{% endfor %}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "layout/basic.html" %}
+{% load embed_video_tags %}
+{% load bootstrap4 %}
+
+{% block title %}Новости{% endblock %}
+
+{% block content %}
+<div class="container">
+	{% if user.is_authenticated %}
+	<div class="row">
+		<div class="col-sm-12 col-lg-3 div m-3">
+			<a class="btn btn-danger m-3" href="{% url 'main:create_news' %}">Добавить новость</a>
+		</div>
+	</div>
+	{% endif %}
+	<div class="row">
+		{% for new in news %}
+		<div class="col-xs-12 col-lg-8 m-3 div">
+			<div class="row">
+				<div class="col-xs-12 col-md-6 col-lg-6 my-5">
+				{% if new.video %}
+					<iframe width="100%" class="rounded"  src="{{ new.video }}" frameborder="0" allowfullscreen></iframe>
+				{% else %}
+					<img width="100%" class="rounded"  src="{{ new.image }}">
+				{% endif %}
+				</div>
+				<div class="col-xs-12 col-md-6 col-lg-6 ">
+					<h1 class="text-white border-danger">{{ new.title }} </h1>
+					<p class="text-white">{{ new.text }}</p>
+					<p class="text-white text-right font-italic">{{ new.author }}</p>
+					{% if new.source %}
+					<p class="text-right font-italic"><a class="text-danger" href="{{ new.source }}">Источник</a></p>
+					{% endif %}
+					<p class="text-white text-right font-italic">{{ new.published }}</p>
+					{% if user.is_authenticated %}
+					<p class="text-right"><a class="btn btn-danger" href="{% url 'main:detail_news' pk=new.pk %}">Подробнее</a></p>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-lg-4 ">
+		</div>
+		{% endfor %}
+	</div>
+	<div class="row">
+		<div class="col">
+			<nav class="" aria-label="Page navigation example">
+  			<ul class="pagination">
+  				{% if page.has_previous %}
+    			<li class="page-item"><a class="page-link text-dark" href="?page={{ page.previous_page_number }}">Previous</a></li>
+    			{% endif %}
+    			{% for obj in page.paginator.page_range %}
+    			<li class="page-item"><a class="page-link text-dark" href="?page={{ obj }}">{{ obj }}</a></li>
+    			{% endfor %}
+    			{% if page.has_next %}
+    			<li class="page-item"><a class="page-link text-dark" href="?page={{ page.next_page_number }}">Next</a></li>
+    			{% endif %}
+  			</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+FROM node as build
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY package.json /app/package.json
+RUN npm install --silent
+RUN npm install @vue/cli@4.5.0
+
+COPY . /app
+
+RUN npm run build

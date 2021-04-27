@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  vue:
+    container_name: vue-four-a
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm run serve
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '8081:8080'
